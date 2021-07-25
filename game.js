@@ -30,6 +30,11 @@ c9.addEventListener('click', function () {revealCard(9); });
 c10.addEventListener('click', function () {revealCard(10); });
 c11.addEventListener('click', function () {revealCard(11); });
 
-function revealCard(nr) {
+let oneVisible = false;
+let turnCounter = 0;
 
+function revealCard(nr) {
+    let image = "url(img/)" + cards[nr] + ")";
+
+    $('#c' + nr).css('background-image', image);
 }

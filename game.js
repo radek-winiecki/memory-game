@@ -1,4 +1,4 @@
-let cards  = ["ciri.png", "geralt.png", "jaskier.png", "jaskier.png", "iorweth.png", "triss.png", "geralt.png", "yen.png", "ciri.png", "triss.png", "yen.png", "iorweth.png"];
+let cards = ["ciri.png", "geralt.png", "jaskier.png", "jaskier.png", "iorweth.png", "triss.png", "geralt.png", "yen.png", "ciri.png", "triss.png", "yen.png", "iorweth.png"];
 
 let c0 = document.getElementById('c0');
 let c1 = document.getElementById('c1');
@@ -35,11 +35,11 @@ let turnCounter = 0;
 let visible_nr;
 
 function revealCard(nr) {
-    let image = "url(img/)" + cards[nr] + ")";
+    let image = "url(img/" + cards[nr] + ")";
 
-    $('#c' + nr).css('background-image', image);
-    $('#c' + nr).addClass('cardA');
-    $('#c' + nr).removeClass('card');
+    $('#c'+nr).css('background-image', image);
+    $('#c'+nr).addClass('cardA');
+    $('#c'+nr).removeClass('card');
 
     if (oneVisible === false) {
         // first card
@@ -48,7 +48,9 @@ function revealCard(nr) {
     } else {
         // second card
         if (cards[visible_nr] === cards[nr]) {
-
+            setTimeout(function () {
+                hide2Cards(nr, visible_nr);
+            }, 750)
         } else {
 
         }
@@ -58,4 +60,9 @@ function revealCard(nr) {
         $('.score').html('Turn counter: ' + turnCounter);
         oneVisible = false;
     }
+}
+
+function hide2Cards(nr1, nr2) {
+    $('#c' + nr1).css('opacity', '0');
+    $('#c' + nr2).css('opacity', '0');
 }

@@ -32,9 +32,30 @@ c11.addEventListener('click', function () {revealCard(11); });
 
 let oneVisible = false;
 let turnCounter = 0;
+let visible_nr;
 
 function revealCard(nr) {
     let image = "url(img/)" + cards[nr] + ")";
 
     $('#c' + nr).css('background-image', image);
+    $('#c' + nr).addClass('cardA');
+    $('#c' + nr).removeClass('card');
+
+    if (oneVisible === false) {
+        // first card
+        oneVisible = true;
+        visible_nr = nr;
+    } else {
+        // second card
+        if (cards[visible_nr] === cards[nr]) {
+
+        } else {
+
+        }
+
+        turnCounter++;
+
+        $('.score').html('Turn counter: ' + turnCounter);
+        oneVisible = false;
+    }
 }

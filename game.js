@@ -1,4 +1,4 @@
-let cards = ["ciri.png", "geralt.png", "jaskier.png", "jaskier.png", "iorweth.png", "triss.png", "geralt.png", "yen.png", "ciri.png", "triss.png", "yen.png", "iorweth.png"];
+var cards = ["ciri.png", "geralt.png", "jaskier.png", "jaskier.png", "iorweth.png", "triss.png", "geralt.png", "yen.png", "ciri.png", "triss.png", "yen.png", "iorweth.png"];
 
 let c0 = document.getElementById('c0');
 let c1 = document.getElementById('c1');
@@ -34,11 +34,12 @@ let oneVisible = false;
 let turnCounter = 0;
 let visible_nr;
 let lock = false;
+let pairsLeft = 6;
 
 function revealCard(nr) {
     let opacityValue = $('#c' + nr).css('opacity');
 
-    if (opacityValue !== 0 && lock === false) {
+    if (opacityValue != 0 && lock === false) {
         lock = true;
 
         let image = "url(img/" + cards[nr] + ")";
@@ -48,24 +49,26 @@ function revealCard(nr) {
         $('#c' + nr).removeClass('card');
 
         if (oneVisible === false) {
-            // first card
+            //first card
+
             oneVisible = true;
             visible_nr = nr;
             lock = false;
         } else {
-            // second card
+            //second card
+
             if (cards[visible_nr] === cards[nr]) {
                 setTimeout(function () {
-                    hide2Cards(nr, visible_nr);
+                    hide2Cards(nr, visible_nr)
                 }, 750);
+
             } else {
-                restore2Cards(function () {
-                    hide2Cards(nr, visible_nr);
+                setTimeout(function () {
+                    restore2Cards(nr, visible_nr)
                 }, 1000);
             }
 
             turnCounter++;
-
             $('.score').html('Turn counter: ' + turnCounter);
             oneVisible = false;
         }
@@ -75,6 +78,12 @@ function revealCard(nr) {
 function hide2Cards(nr1, nr2) {
     $('#c' + nr1).css('opacity', '0');
     $('#c' + nr2).css('opacity', '0');
+
+    pairsLeft--;
+
+    if (pairsLeft === 0) {
+        $('.board').html('<h1>You win!<br>Done in ' + turnCounter + ' turns</h1>');
+    }
 
     lock = false;
 }

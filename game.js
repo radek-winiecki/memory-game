@@ -13,7 +13,7 @@ let c7 = document.getElementById('c7');
 let c8 = document.getElementById('c8');
 let c9 = document.getElementById('c9');
 let c10 = document.getElementById('c10');
-let c11= document.getElementById('c11');
+let c11 = document.getElementById('c11');
 
 c0.addEventListener('click', function () {revealCard(0); });
 c1.addEventListener('click', function () {revealCard(1); });
@@ -35,34 +35,50 @@ let turnCounter = 0;
 let visible_nr;
 
 function revealCard(nr) {
-    let image = "url(img/" + cards[nr] + ")";
+    let opacityValue = $('#c' + nr).css('opacity');
 
-    $('#c'+nr).css('background-image', image);
-    $('#c'+nr).addClass('cardA');
-    $('#c'+nr).removeClass('card');
+    if (opacityValue !== 0) {
+        let image = "url(img/" + cards[nr] + ")";
 
-    if (oneVisible === false) {
-        // first card
-        oneVisible = true;
-        visible_nr = nr;
-    } else {
-        // second card
-        if (cards[visible_nr] === cards[nr]) {
-            setTimeout(function () {
-                hide2Cards(nr, visible_nr);
-            }, 750)
+        $('#c' + nr).css('background-image', image);
+        $('#c' + nr).addClass('cardA');
+        $('#c' + nr).removeClass('card');
+
+        if (oneVisible === false) {
+            // first card
+            oneVisible = true;
+            visible_nr = nr;
         } else {
+            // second card
+            if (cards[visible_nr] === cards[nr]) {
+                setTimeout(function () {
+                    hide2Cards(nr, visible_nr);
+                }, 750);
+            } else {
+                restore2Cards(function () {
+                    hide2Cards(nr, visible_nr);
+                }, 1000);
+            }
 
+            turnCounter++;
+
+            $('.score').html('Turn counter: ' + turnCounter);
+            oneVisible = false;
         }
-
-        turnCounter++;
-
-        $('.score').html('Turn counter: ' + turnCounter);
-        oneVisible = false;
     }
 }
 
 function hide2Cards(nr1, nr2) {
     $('#c' + nr1).css('opacity', '0');
     $('#c' + nr2).css('opacity', '0');
+}
+
+function restore2Cards(nr1, nr2) {
+    $('#c' + nr1).css('background-image', 'url(img/karta.png)');
+    $('#c' + nr1).addClass('card');
+    $('#c' + nr1).removeClass('cardA');
+
+    $('#c' + nr2).css('background-image', 'url(img/karta.png)');
+    $('#c' + nr2).addClass('card');
+    $('#c' + nr2).removeClass('cardA');
 }
